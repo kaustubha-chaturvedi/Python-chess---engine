@@ -144,7 +144,7 @@ async def sitecustomize():
 
         # now make a prompt
         fnt = pygame.sysfont.SysFont("freesans",  uy(80) )
-        prompt = fnt.render("Ready to start !", True, "blue")
+        prompt = fnt.render("Click to start !", True, "blue")
         pg_bar(track.len)
         screen.blit(prompt, ( marginx+ ux(80), marginy - uy(10) ) )
         compose()
@@ -236,7 +236,7 @@ config = {
     <meta name="mobile-web-app-capable" content="yes">
 
 
-    <link rel="icon" type="image/png" href="favicon.png" sizes="16x16">
+    <link rel="icon" type="image/png" href="favicon.png" sizes="128x128">
 
     <style>
         #status {
