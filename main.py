@@ -78,13 +78,13 @@ def main():
             if not brainThinking:
                 brainThinking = True
                 returnQueue = Queue()
-                move_finder_process = Process(target=brain.goStockfish, args=(gs, validMoves, returnQueue))
+                move_finder_process = Process(target=brain.makeMove, args=(gs, validMoves, returnQueue))
                 move_finder_process.start()
 
             if not move_finder_process.is_alive():
                 autoMove = returnQueue.get()
                 if autoMove is None:
-                    autoMove = brain.talMove(validMoves)
+                    autoMove = brain.randomMove(validMoves)
                 gs.makeMove(autoMove)
                 moveMade = True
                 animate = True

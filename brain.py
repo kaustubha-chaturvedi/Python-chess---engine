@@ -1,25 +1,25 @@
 import random
 from const import *
 
-def talMove(validMoves):
+def randomMove(validMoves):
     return random.choice(validMoves)
 
-def goStockfish(gs, validMoves,returnQueue):
+def makeMove(gs, validMoves,returnQueue):
     global nextMove
     nextMove = None
     random.shuffle(validMoves)
-    sastaStockfishMove(gs,validMoves,DEPTH,-CHECKMATE,CHECKMATE,1 if gs.whiteToMove else -1)
+    negaMaxAB(gs,validMoves,DEPTH,-CHECKMATE,CHECKMATE,1 if gs.whiteToMove else -1)
     returnQueue.put(nextMove) 
 
 
-def sastaStockfishMove(gs,validMoves,depth,alpha,beta,turn):
+def negaMaxAB(gs,validMoves,depth,alpha,beta,turn):
     global nextMove
     if depth==0:
-        return turn*scoreCalc(gs)
+        return turn*eval(gs)
     maxScore = -CHECKMATE
     for move in validMoves:
         gs.makeMove(move)
-        score = -sastaStockfishMove(gs,gs.getValidMoves(),depth-1,-beta,-alpha,-turn)
+        score = -negaMaxAB(gs,gs.getValidMoves(),depth-1,-beta,-alpha,-turn)
         if score>maxScore:
             maxScore = score
             if depth == DEPTH: nextMove = move
@@ -29,7 +29,7 @@ def sastaStockfishMove(gs,validMoves,depth,alpha,beta,turn):
             break
     return maxScore
 
-def scoreCalc(gs):
+def eval(gs):
     if gs.checkmate:
         if gs.whiteToMove:
             return -CHECKMATE
