@@ -19,7 +19,7 @@ winSound = p.mixer.Sound('sounds/win.ogg')
 font = p.font.SysFont('monospace', 18, bold=True)
 IMAGES = {}
 def loadImages():
-    pieces = ['wp','wR','wN','wB','wK','wQ','bp','bR','bN','bB','bK','bQ']
+    pieces = ['wP','wR','wN','wB','wK','wQ','bP','bR','bN','bB','bK','bQ']
     for piece in pieces:
         IMAGES[piece] = p.transform.scale(p.image.load("images/"+piece+".png"),(SQ_SIZE*0.8,SQ_SIZE*0.8))
 
@@ -30,7 +30,7 @@ CHECKMATE = 1000
 STALEMATE = 0
 DEPTH=3
 
-pieceScore = {'p': 1, 'N': 3, 'B': 3, 'R': 5, 'Q': 9, 'K': 0}
+pieceScore = {'P': 1, 'N': 3, 'B': 3, 'R': 5, 'Q': 9, 'K': 0}
 
 nScore = [[0.0, 0.1, 0.2, 0.2, 0.2, 0.2, 0.1, 0.0],
             [0.1, 0.3, 0.5, 0.5, 0.5, 0.5, 0.3, 0.1],
@@ -95,6 +95,6 @@ piecePositionScores = {"wN": nScore,
                     "bQ": qScore[::-1],
                     "wR": rScore,
                     "bR": rScore[::-1],
-                    "wp": pScore,
-                    "bp": pScore[::-1]
+                    "wP": pScore,
+                    "bP": pScore[::-1]
                 }

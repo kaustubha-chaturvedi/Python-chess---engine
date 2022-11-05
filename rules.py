@@ -2,12 +2,12 @@ class GameState():
     def __init__(self):
         self.board=[
             ["bR","bN","bB","bQ","bK","bB","bN","bR"],
-            ["bp","bp","bp","bp","bp","bp","bp","bp"],
+            ["bP","bP","bP","bP","bP","bP","bP","bP"],
             ["<>","<>","<>","<>","<>","<>","<>","<>"],
             ["<>","<>","<>","<>","<>","<>","<>","<>"],
             ["<>","<>","<>","<>","<>","<>","<>","<>"],
             ["<>","<>","<>","<>","<>","<>","<>","<>"],
-            ["wp","wp","wp","wp","wp","wp","wp","wp"],
+            ["wP","wP","wP","wP","wP","wP","wP","wP"],
             ["wR","wN","wB","wQ","wK","wB","wN","wR"]
         ]
         self.whiteToMove=True
@@ -15,7 +15,7 @@ class GameState():
         self.checkmate=False
         self.stalemate=False
         self.moveFunctions = {
-            "p":self.getPawnMoves,"R":self.getRookMoves,
+            "P":self.getPawnMoves,"R":self.getRookMoves,
             "N":self.getKnightMoves,"B":self.getBishopMoves,
             "Q":self.getQueenMoves,"K":self.getKingMoves
         }
@@ -47,7 +47,7 @@ class GameState():
         if move.enpassant:
             self.board[move.startRow][move.endCol] = "<>"
 
-        if move.pieceMoved[1] == "p" and abs(move.startRow - move.endRow) == 2:
+        if move.pieceMoved[1] == "P" and abs(move.startRow - move.endRow) == 2:
             self.enpassantPossible = ((move.startRow+move.endRow)//2,move.startCol)
         else:
             self.enpassantPossible = ()
@@ -432,15 +432,15 @@ class GameState():
             endCol = startCol + m[1]
             if 0 <= endRow <= 7 and 0 <= endCol <= 7:
                 endPiece = self.board[endRow][endCol]
-                if endPiece[0] == enemyColor and endPiece[1] == "p":
+                if endPiece[0] == enemyColor and endPiece[1] == "P":
                     inCheck = True
                     checks.append((endRow,endCol,m[0],m[1]))
         return inCheck, pins, checks
    
 class Move():
     pieceToMove = {
-                    "wp":"P","wR":"R","wN":"N","wB":"B","wK":"K","wQ":"Q",
-                    "bp":"p","bR":"r","bN":"n","bB":"b","bK":"k","bQ":"q"
+                    "wP":"P","wR":"R","wN":"N","wB":"B","wK":"K","wQ":"Q",
+                    "bP":"P","bR":"r","bN":"n","bB":"b","bK":"k","bQ":"q"
                     }
     rowsToRanks = {7:'1',6:'2',5:'3',4:'4',3:'5',2:'6',1:'7',0:'8'}
     colsToFiles = {0:'a',1:'b', 2:'c',3:'d',4:'e',5:'f',6:'g',7:'h'}
@@ -452,12 +452,12 @@ class Move():
         self.endCol = endSq[1]
         self.pieceMoved = board[self.startRow][self.startCol]
         self.pieceCaptured = board[self.endRow][self.endCol]
-        self.promotion = (self.pieceMoved == "wp" and self.endRow == 0) or \
-                                (self.pieceMoved == "bp" and self.endRow == 7)
+        self.promotion = (self.pieceMoved == "wP" and self.endRow == 0) or \
+                                (self.pieceMoved == "bP" and self.endRow == 7)
         self.enpassant = enpassant
         self.castle = castle
         if self.enpassant:
-            self.pieceCaptured = "wp" if self.pieceMoved == "bp" else "bp"        
+            self.pieceCaptured = "wP" if self.pieceMoved == "bP" else "bP"        
         self.moveID = self.startRow*1000+self.startCol*100+self.endRow*10+self.endCol
 
     def __eq__(self,other):
@@ -473,11 +473,11 @@ class Move():
             return "O-O" if self.endCol == 6 else "O-O-O"
         endSquare = self.getRankFile(self.endRow,self.endCol)
         if self.pieceCaptured != "<>":
-            if self.pieceMoved[1] == "p":
+            if self.pieceMoved[1] == "P":
                 return self.colsToFiles[self.startCol]+"X"+endSquare
             return (self.pieceMoved[1] if self.pieceMoved[0]=="w" else self.pieceMoved[1].lower())+"X"+endSquare
         else:
-            if self.pieceMoved[1] == "p":
+            if self.pieceMoved[1] == "P":
                 return endSquare
             return (self.pieceMoved[1] if self.pieceMoved[0]=="w" else self.pieceMoved[1].lower())+endSquare
         
